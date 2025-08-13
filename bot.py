@@ -32,7 +32,7 @@ def redirect_page(short_id):
 
     original_link = links_data[short_id]
 
-    # HTML redirect template with ads
+    # HTML redirect template with countdown first, then ads
     html_template = f"""
     <!DOCTYPE html>
     <html>
@@ -49,11 +49,14 @@ def redirect_page(short_id):
             .countdown {{
                 font-size: 20px;
                 margin-top: 20px;
+                font-weight: bold;
+                color: #333;
             }}
         </style>
     </head>
     <body>
         <h2>আপনাকে রিডিরেক্ট করা হচ্ছে...</h2>
+        <div class="countdown">৭ সেকেন্ড অপেক্ষা করুন...</div>
         
         <!-- Banner Ad -->
         <div style="margin: 20px auto;">
@@ -78,8 +81,6 @@ def redirect_page(short_id):
         <!-- Native Banner Ad -->
         <script async="async" data-cfasync="false" src="//plugfundsbadger.com/4a9890433ba4ffecea5d8eb6290295e6/invoke.js"></script>
         <div id="container-4a9890433ba4ffecea5d8eb6290295e6"></div>
-
-        <div class="countdown">৭ সেকেন্ড অপেক্ষা করুন...</div>
 
         <script>
             let count = 7;
@@ -129,7 +130,8 @@ def short_link(original_link):
     short_id = generate_short_id()
     links_data[short_id] = original_link
     save_links(links_data)
-    return f"https://{os.environ.get('RENDER_EXTERNAL_HOSTNAME', 'localhost')}/r/{short_id}"
+    # Fixed domain for short link
+    return f"https://teraboxlink.free.nf/r/{short_id}"
 
 # Extract all links
 def extract_links(text):
